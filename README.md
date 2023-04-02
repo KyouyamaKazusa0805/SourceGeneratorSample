@@ -24,6 +24,12 @@ git clone https://github.com/SunnieShine/SourceGeneratorSample.git
 
 另外，使用放大镜功能后，视频里会出现一个额外的小鼠标指针。这是我使用的 Bandicam 对视频分辨率的兼容性的问题，这不影响食用，但可能看着会有点难受，请你忽略那个小的指针。
 
+## 开源协议
+
+[Unlicense 协议](LICENSE)
+
+\* 你可以肆无忌惮地使用此仓库里的源代码，来干你想干的任何事情。你甚至在使用本仓库的源代码期间无需声明版权信息。你只要下载下来就属于你了！
+
 ## 链接
 
 [源代码生成器系列视频](https://b23.tv/QkbG1uC)
