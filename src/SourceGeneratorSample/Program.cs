@@ -1,0 +1,1 @@
+Lesson6.Invoke();

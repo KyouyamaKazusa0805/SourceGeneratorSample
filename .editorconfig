@@ -1,0 +1,33 @@
+root = true
+
+[*.cs]
+
+indent_size = 4
+indent_style = tab
+tab_width = 4
+end_of_line = crlf
+insert_final_newline = false
+charset = utf-8
+
+spelling_languages = en-us
+spelling_checkable_types = strings,identifiers,comments
+spelling_error_severity = suggestion
+spelling_use_default_exclusion_dictionary = true
+spelling_exclusion_path = .\ignored-misspelling.dic
+
+dotnet_separate_import_directive_groups = false
+dotnet_sort_system_directives_first = true
+file_header_template = unset
+
+# IDE0008: Use explicit type
+csharp_style_var_for_built_in_types = false
+csharp_style_var_when_type_is_apparent = true
+csharp_style_var_elsewhere = true
+
+[*.csproj]
+
+indent_size = 4
+indent_style = tab
+tab_width = 4
+end_of_line = crlf
+insert_final_newline = false
