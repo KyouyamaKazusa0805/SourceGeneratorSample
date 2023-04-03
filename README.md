@@ -34,6 +34,10 @@ git clone https://github.com/SunnieShine/SourceGeneratorSample.git
 
 [源代码生成器系列视频](https://b23.tv/QkbG1uC)
 
+[`ISourceGenerator` 使用手册](https://github.com/dotnet/roslyn/blob/main/docs/features/source-generators.cookbook.md)
+
+[`IIncrementalGenerator` 使用手册](https://github.com/dotnet/roslyn/blob/main/docs/features/incremental-generators.md)
+
 ## 作者
 
 [SunnieShine](https://space.bilibili.com/23736703)
