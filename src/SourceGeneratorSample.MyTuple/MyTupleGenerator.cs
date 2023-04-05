@@ -9,10 +9,28 @@ public sealed class MyTupleGenerator : ISourceGenerator
 	/// <inheritdoc/>
 	public void Execute(GeneratorExecutionContext context)
 	{
+		// 读取本地配置文件（用 .txt 文件格式表示的），
+		// 并取出其中的整数配置数值，然后给替换到这里的 maxCount 变量上。
+		// 注意，我们从外部导入进来的 .txt 格式的文件是放在目标项目里的，
+		// 也就是源代码生成器生成的那些个代码文件，所存储的那个项目。
+		// 而不是这个项目！一定要注意这个问题；否则会导致源代码生成器无法找到 AdditionalFiles
+		// 属性的结果，导致生成内容的错误，以及不满足预期的结果。
+		var maxCount = 8;
+		if (context.AdditionalFiles is [{ Path: var path }])
+		{
+			var result = File.ReadAllText(path);
+			var regex = new Regex("""\d+""");
+			if (regex.Match(result) is { Success: true, Value: var v }
+				&& int.TryParse(v, out var value) && value is >= 2 and <= 8)
+			{
+				maxCount = value;
+			}
+		}
+
 		// 我们的目标是生成一个泛型参数个数不同的同名重载类型，跟 Action、Action<>、Action<,> 等等相似的代码片段。
 		// 所以我们需要一个循环去生成它们。
 		var list = new List<string>();
-		for (var i = 2; i <= 8; i++)
+		for (var i = 2; i <= maxCount; i++)
 		{
 			// 基本片段。
 			var indices = Enumerable.Range(1, i).ToArray();

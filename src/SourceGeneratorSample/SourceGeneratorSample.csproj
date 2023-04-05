@@ -8,6 +8,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<AdditionalFiles Include="MyTupleMaxTypeArgumentCount.txt" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\SourceGeneratorSample.Greeting\SourceGeneratorSample.Greeting.csproj" OutputItemType="Analyzer" ReferenceOutAssembly="false" />
 		<ProjectReference Include="..\SourceGeneratorSample.MyTuple\SourceGeneratorSample.MyTuple.csproj" OutputItemType="Analyzer" ReferenceOutAssembly="false" />
 	</ItemGroup>
