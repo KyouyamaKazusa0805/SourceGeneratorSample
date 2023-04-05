@@ -6,6 +6,19 @@ namespace SourceGeneratorSample.MyTuple;
 [Generator(LanguageNames.CSharp)]
 public sealed class MyTupleGenerator : ISourceGenerator
 {
+	/// <summary>
+	/// 一个用于本地文件配置信息错误，导致无法读取的错误提示信息数据的呈现对象。
+	/// </summary>
+	private static readonly DiagnosticDescriptor Descriptor = new(
+		"SG0000",
+		"本地配置文件错误",
+		"源代码生成器生成成功，但本地配置文件有误。错误情况：{0}。",
+		"SourceGenerator",
+		DiagnosticSeverity.Warning,
+		true
+	);
+
+
 	/// <inheritdoc/>
 	public void Execute(GeneratorExecutionContext context)
 	{
@@ -20,13 +33,30 @@ public sealed class MyTupleGenerator : ISourceGenerator
 		{
 			var result = File.ReadAllText(path);
 			var regex = new Regex("""\d+""");
-			if (regex.Match(result) is { Success: true, Value: var v }
-				&& int.TryParse(v, out var value) && value is >= 2 and <= 8)
+			var match = regex.Match(result);
+			if (!match.Success)
 			{
-				maxCount = value;
+				context.ReportDiagnostic(Diagnostic.Create(Descriptor, null, new[] { "配置文件的内容并不是一个数字" }));
+				goto GeneratePart;
 			}
+
+			var v = match.Value;
+			if (!int.TryParse(v, out var value))
+			{
+				context.ReportDiagnostic(Diagnostic.Create(Descriptor, null, new[] { "配置文件书写的数字过大" }));
+				goto GeneratePart;
+			}
+
+			if (value is not (>= 2 and <= 8))
+			{
+				context.ReportDiagnostic(Diagnostic.Create(Descriptor, null, new[] { "由于源代码生成器的限制，输入的数值只能介于 2 到 8 之间（可含边界）" }));
+				goto GeneratePart;
+			}
+
+			maxCount = value;
 		}
 
+	GeneratePart:
 		// 我们的目标是生成一个泛型参数个数不同的同名重载类型，跟 Action、Action<>、Action<,> 等等相似的代码片段。
 		// 所以我们需要一个循环去生成它们。
 		var list = new List<string>();
