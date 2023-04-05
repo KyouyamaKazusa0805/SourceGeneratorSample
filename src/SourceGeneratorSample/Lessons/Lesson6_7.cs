@@ -1,9 +1,9 @@
 namespace SourceGeneratorSample.Lessons;
 
 /// <summary>
-/// 第六节课（实战：创建 <c>MyTuple</c> 系列类型）的源代码调用。
+/// 第六、七节课（实战：创建 <c>MyTuple</c> 系列类型）的源代码调用。
 /// </summary>
-public sealed class Lesson6 : ILessonInvoker
+public sealed class Lesson6_7 : ILessonInvoker
 {
 	/// <inheritdoc/>
 	public static void Invoke()

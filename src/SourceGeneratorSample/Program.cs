@@ -1,1 +1,1 @@
-Lesson6.Invoke();
+Lesson6_7.Invoke();
