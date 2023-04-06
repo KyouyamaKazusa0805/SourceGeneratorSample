@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8A7896AB-715D-496A-B5A0-6CA34695C644}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		Directory.build.props = Directory.build.props
 		ignored-misspelling.dic = ignored-misspelling.dic
 		LICENSE = LICENSE
 		README.md = README.md
@@ -16,6 +17,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SourceGeneratorSample.Greeting", "src\SourceGeneratorSample.Greeting\SourceGeneratorSample.Greeting.csproj", "{FE58100B-F6DC-4BF8-9CA1-7F14CACEC33C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SourceGeneratorSample.MyTuple", "src\SourceGeneratorSample.MyTuple\SourceGeneratorSample.MyTuple.csproj", "{8E47F23B-6EED-4FC6-A7F2-1F13496EF35B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SourceGeneratorSample.Core", "src\SourceGeneratorSample.Core\SourceGeneratorSample.Core.csproj", "{B7ADDF3A-072A-4678-BF62-41917E0497FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +38,10 @@ Global
 		{8E47F23B-6EED-4FC6-A7F2-1F13496EF35B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E47F23B-6EED-4FC6-A7F2-1F13496EF35B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E47F23B-6EED-4FC6-A7F2-1F13496EF35B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7ADDF3A-072A-4678-BF62-41917E0497FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7ADDF3A-072A-4678-BF62-41917E0497FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7ADDF3A-072A-4678-BF62-41917E0497FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7ADDF3A-072A-4678-BF62-41917E0497FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

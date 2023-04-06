@@ -1,4 +1,4 @@
-﻿namespace SourceGeneratorSample.Basic;
+namespace SourceGeneratorSample.Basic;
 
 /// <summary>
 /// 表示一个源代码生成器，生成一个类型，自带一个打招呼的方法。
@@ -13,7 +13,7 @@ public sealed class GreetingGenerator_Basic : ISourceGenerator
 	/// <inheritdoc/>
 	public void Execute(GeneratorExecutionContext context)
 		=> context.AddSource(
-			"Greeting.g.cs",
+			$"Greeting{SourceGeneratorFileNameShortcut.GreetingGenerator_Basic}",
 			$$"""
 			// 告知编译器，该文件由源代码生成器或别的手段生成产生的代码。
 			// 这样可以防止编译器对这个代码段进行代码分析，避免不必要的编译器警告或普通信息提示。
