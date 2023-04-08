@@ -1,0 +1,12 @@
+<Project>
+
+	<PropertyGroup>
+		<Nullable>enable</Nullable>
+		<LangVersion>preview</LangVersion>
+	</PropertyGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0' and '$(MSBuildProjectFile)'!='SourceGeneratorSample.Core.csproj'">
+		<ProjectReference Include="..\SourceGeneratorSample.Core\SourceGeneratorSample.Core.csproj" OutputItemType="Analyzer" ReferenceOutAssembly="true" />
+	</ItemGroup>
+
+</Project>
