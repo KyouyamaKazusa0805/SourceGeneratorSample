@@ -29,7 +29,7 @@ public sealed class GreetingGenerator_Basic : ISourceGenerator
 			/// 用于打招呼的类型。
 			/// </summary>
 			[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute]
-			[global::System.CodeDom.Compiler.GeneratedCodeAttribute("{{nameof(GreetingGenerator_Basic)}}", "1.0")]
+			[global::System.CodeDom.Compiler.GeneratedCodeAttribute("{{nameof(GreetingGenerator_Basic)}}", "{{SourceGeneratorVersion.Value}}")]
 			public static class Greeting
 			{
 				/// <summary>
@@ -37,7 +37,7 @@ public sealed class GreetingGenerator_Basic : ISourceGenerator
 				/// </summary>
 				/// <param name="name">表示对谁打招呼。指定一个字符串，表示其人的名字。</param>
 				[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute]
-				[global::System.CodeDom.Compiler.GeneratedCodeAttribute("{{nameof(GreetingGenerator_Basic)}}", "1.0")]
+				[global::System.CodeDom.Compiler.GeneratedCodeAttribute("{{nameof(GreetingGenerator_Basic)}}", "{{SourceGeneratorVersion.Value}}")]
 				public static void SayHelloTo(string name)
 					=> global::System.Console.WriteLine($"Hello, {name}!");
 			}

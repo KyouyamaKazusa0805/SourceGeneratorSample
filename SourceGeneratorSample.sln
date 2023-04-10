@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8A7896AB-715D-496A-B5A0-6CA34695C644}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		Directory.Build.props = Directory.Build.props
 		ignored-misspelling.dic = ignored-misspelling.dic
 		LICENSE = LICENSE
 		README.md = README.md

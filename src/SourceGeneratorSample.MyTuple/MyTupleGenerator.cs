@@ -113,7 +113,7 @@ public sealed class MyTupleGenerator : ISourceGenerator
 				/// </summary>
 				{{docParamPart}}
 				[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute]
-				[global::System.CodeDom.Compiler.GeneratedCodeAttribute("{{nameof(MyTupleGenerator)}}", "1.0")]
+				[global::System.CodeDom.Compiler.GeneratedCodeAttribute("{{nameof(MyTupleGenerator)}}", "{{SourceGeneratorVersion.Value}}")]
 				public readonly struct MyTuple{{genericArgs}}({{ctorArgs}}) :
 					global::System.IEquatable<MyTuple{{genericArgs}}>,
 					global::System.Numerics.IEqualityOperators<MyTuple{{genericArgs}}, MyTuple{{genericArgs}}, bool>
@@ -123,30 +123,30 @@ public sealed class MyTupleGenerator : ISourceGenerator
 
 					/// <inheritdoc/>
 					[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute]
-					[global::System.CodeDom.Compiler.GeneratedCodeAttribute("{{nameof(MyTupleGenerator)}}", "1.0")]
+					[global::System.CodeDom.Compiler.GeneratedCodeAttribute("{{nameof(MyTupleGenerator)}}", "{{SourceGeneratorVersion.Value}}")]
 					public override bool Equals([global::System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] object? obj)
 						=> obj is MyTuple{{genericArgs}} comparer && Equals(comparer);
 
 					/// <inheritdoc/>
 					[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute]
-					[global::System.CodeDom.Compiler.GeneratedCodeAttribute("{{nameof(MyTupleGenerator)}}", "1.0")]
+					[global::System.CodeDom.Compiler.GeneratedCodeAttribute("{{nameof(MyTupleGenerator)}}", "{{SourceGeneratorVersion.Value}}")]
 					public bool Equals(MyTuple{{genericArgs}} other) => this == other;
 
 					/// <inheritdoc/>
 					[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute]
-					[global::System.CodeDom.Compiler.GeneratedCodeAttribute("{{nameof(MyTupleGenerator)}}", "1.0")]
+					[global::System.CodeDom.Compiler.GeneratedCodeAttribute("{{nameof(MyTupleGenerator)}}", "{{SourceGeneratorVersion.Value}}")]
 					public override int GetHashCode() => HashCode.Combine({{paramsInHashCode}});
 
 
 					/// <inheritdoc/>
 					[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute]
-					[global::System.CodeDom.Compiler.GeneratedCodeAttribute("{{nameof(MyTupleGenerator)}}", "1.0")]
+					[global::System.CodeDom.Compiler.GeneratedCodeAttribute("{{nameof(MyTupleGenerator)}}", "{{SourceGeneratorVersion.Value}}")]
 					public static bool operator ==(MyTuple{{genericArgs}} left, MyTuple{{genericArgs}} right)
 						=> {{comparison}};
 
 					/// <inheritdoc/>
 					[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute]
-					[global::System.CodeDom.Compiler.GeneratedCodeAttribute("{{nameof(MyTupleGenerator)}}", "1.0")]
+					[global::System.CodeDom.Compiler.GeneratedCodeAttribute("{{nameof(MyTupleGenerator)}}", "{{SourceGeneratorVersion.Value}}")]
 					public static bool operator !=(MyTuple{{genericArgs}} left, MyTuple{{genericArgs}} right)
 						=> !(left == right);
 				}
