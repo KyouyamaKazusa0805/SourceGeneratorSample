@@ -10,4 +10,5 @@ internal static class SourceGeneratorFileNameShortcut
 	public const string GreetingGenerator_UseAttribute = ".g.ggua.cs";
 	public const string MyTupleGenerator = ".g.mtg.cs";
 	public const string VersionGenerator = ".g.vg.cs";
+	public const string GreetingGenerator_UseIncrementalGenerator = ".g.gguig.cs";
 }
