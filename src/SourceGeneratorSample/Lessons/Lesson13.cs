@@ -7,5 +7,5 @@ public sealed class Lesson13 : ILessonInvoker
 {
 	/// <inheritdoc/>
 	public static void Invoke()
-		=> GreetingUsePatrialClass_IncrementalGenerator.SayHelloTo2("Sunnie");
+		=> GreetingUsePartialClass_IncrementalGenerator.SayHelloTo2("Sunnie");
 }
