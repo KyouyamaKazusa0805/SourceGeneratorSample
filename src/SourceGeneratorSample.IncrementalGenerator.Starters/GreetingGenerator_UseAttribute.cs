@@ -19,7 +19,7 @@ public sealed class GreetingGenerator_UseAttribute : IIncrementalGenerator
 					}
 					&& modifiers.Any(SyntaxKind.PartialKeyword)
 					&& typeModifiers.Any(SyntaxKind.PartialKeyword),
-					(gasc, _) => gasc switch
+					static (gasc, _) => gasc switch
 					{
 						{
 							TargetNode: MethodDeclarationSyntax node,
@@ -27,13 +27,7 @@ public sealed class GreetingGenerator_UseAttribute : IIncrementalGenerator
 							{
 								Name: var methodName,
 								TypeParameters: [],
-								Parameters:
-								[
-									{
-										Type.SpecialType: SpecialType.System_String,
-										Name: var paramName
-									}
-								],
+								Parameters: [{ Type.SpecialType: SpecialType.System_String, Name: var paramName }],
 								ReturnsVoid: true,
 								IsStatic: true,
 								ContainingType:
@@ -48,7 +42,7 @@ public sealed class GreetingGenerator_UseAttribute : IIncrementalGenerator
 					}
 				)
 				.Collect(),
-			(spc, data) =>
+			static (spc, data) =>
 			{
 				foreach (var tuple in data)
 				{
