@@ -12,4 +12,5 @@ internal static class SourceGeneratorFileNameShortcut
 	public const string VersionGenerator = ".g.vg.cs";
 	public const string GreetingGenerator_UseIncrementalGenerator = ".g.gguig.cs";
 	public const string GreetingGenerator_PartialMethod_UseIncrementalGenerator = ".g.ggpm.uig.cs";
+	public const string AutoDeconstructMethodGenerator = ".g.admg.cs";
 }
