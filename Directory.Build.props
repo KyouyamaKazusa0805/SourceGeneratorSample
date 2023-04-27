@@ -11,4 +11,14 @@
 		<ProjectReference Include="..\SourceGeneratorSample.Core\SourceGeneratorSample.Core.csproj" OutputItemType="Analyzer" ReferenceOutAssembly="true" />
 	</ItemGroup>
 
+	<ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
+		<Using Include="System" />
+		<Using Include="System.Collections" />
+		<Using Include="System.Collections.Generic" />
+		<Using Include="System.Linq" />
+		<Using Include="Microsoft.CodeAnalysis" />
+		<Using Include="Microsoft.CodeAnalysis.CSharp" />
+		<Using Include="Microsoft.CodeAnalysis.CSharp.Syntax" />
+	</ItemGroup>
+
 </Project>

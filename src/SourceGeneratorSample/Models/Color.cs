@@ -38,9 +38,8 @@ public readonly partial struct Color(byte a, byte r, byte g, byte b) :
 	[Deconstruct]
 	public partial void Deconstruct(out byte a, out byte r, out byte g, out byte b);
 
-	/// <inheritdoc/>
-	public override bool Equals([NotNullWhen(true)] object? obj)
-		=> obj is Color comparer && Equals(comparer);
+	[AutoOverridding]
+	public override partial bool Equals(object? obj);
 
 	/// <inheritdoc/>
 	public bool Equals(Color other) => (A, R, G, B) == (other.A, other.R, other.G, other.B);
