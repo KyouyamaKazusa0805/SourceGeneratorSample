@@ -44,8 +44,8 @@ public readonly partial struct Color(byte a, byte r, byte g, byte b) :
 	/// <inheritdoc/>
 	public bool Equals(Color other) => (A, R, G, B) == (other.A, other.R, other.G, other.B);
 
-	/// <inheritdoc/>
-	public override int GetHashCode() => A << 24 | R << 16 | G << 8 | B;
+	[AutoOverridding]
+	public override partial int GetHashCode();
 
 	/// <inheritdoc cref="object.ToString"/>
 	public override string ToString()

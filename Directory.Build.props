@@ -15,7 +15,9 @@
 		<Using Include="System" />
 		<Using Include="System.Collections" />
 		<Using Include="System.Collections.Generic" />
+		<Using Include="System.Collections.Immutable" />
 		<Using Include="System.Linq" />
+		<Using Include="System.Threading" />
 		<Using Include="Microsoft.CodeAnalysis" />
 		<Using Include="Microsoft.CodeAnalysis.CSharp" />
 		<Using Include="Microsoft.CodeAnalysis.CSharp.Syntax" />
