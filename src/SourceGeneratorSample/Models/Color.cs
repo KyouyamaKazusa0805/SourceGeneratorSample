@@ -47,9 +47,8 @@ public readonly partial struct Color(byte a, byte r, byte g, byte b) :
 	[AutoOverridding]
 	public override partial int GetHashCode();
 
-	/// <inheritdoc cref="object.ToString"/>
-	public override string ToString()
-		=> $$"""{{nameof(Color)}} { {{nameof(A)}} = {{A}}, {{nameof(R)}} = {{R}}, {{nameof(G)}} = {{G}}, {{nameof(B)}} = {{B}} }""";
+	[AutoOverridding]
+	public override partial string ToString();
 
 
 	/// <inheritdoc/>

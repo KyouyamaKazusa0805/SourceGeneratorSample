@@ -42,19 +42,29 @@ public sealed class AutoOverriddingGenerator : IIncrementalGenerator
 				.Collect(),
 			Output_GetHashCode
 		);
+
+		context.RegisterSourceOutput(
+			context.SyntaxProvider
+				.ForAttributeWithMetadataName(
+					"SourceGeneratorSample.Models.AutoOverriddingAttribute",
+					AlwaysTrue,
+					Transform_ToString
+				)
+				.Where(NotNull)
+				.Select(SelectNotNull)
+				.Collect(),
+			Output_ToString
+		);
 	}
 
 	private static Data_Equals? Transform_Equals(GeneratorAttributeSyntaxContext gasc, CancellationToken _)
-	{
-		if (gasc is not
+		=> gasc switch
+		{
 			{
 				TargetNode: MethodDeclarationSyntax
 				{
 					Modifiers: var methodModifiers and not [],
-					Parent: TypeDeclarationSyntax
-					{
-						Modifiers: var typeModifiers and not []
-					}
+					Parent: TypeDeclarationSyntax { Modifiers: var typeModifiers and not [] }
 				},
 				TargetSymbol: IMethodSymbol
 				{
@@ -70,50 +80,36 @@ public sealed class AutoOverriddingGenerator : IIncrementalGenerator
 						ContainingNamespace: var namespaceSymbol
 					} typeSymbol
 				}
-			})
-		{
-			return null;
-		}
-
-		if (!methodModifiers.Any(SyntaxKind.PartialKeyword)
-			|| !typeModifiers.Any(SyntaxKind.PartialKeyword))
-		{
-			return null;
-		}
-
-		return new(
-			namespaceSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)["global::".Length..],
-			(isRecord, typeKind) switch
-			{
-				(true, TypeKind.Class) => "record",
-				(true, TypeKind.Struct) => "record struct",
-				(_, TypeKind.Class) => "class",
-				(_, TypeKind.Struct) => "struct",
-				(_, TypeKind.Interface) => "interface",
-				_ => throw new InvalidOperationException()
-			},
-			typeName,
-			typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
-			typeParameters switch
-			{
-				[] => null,
-				_ => $"<{string.Join(", ", typeParameters)}>"
-			},
-			methodModifiers
-		);
-	}
+			}
+			when methodModifiers.Any(SyntaxKind.PartialKeyword)
+				&& typeModifiers.Any(SyntaxKind.PartialKeyword)
+				=> new(
+					namespaceSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)["global::".Length..],
+					(isRecord, typeKind) switch
+					{
+						(true, TypeKind.Class) => "record",
+						(true, TypeKind.Struct) => "record struct",
+						(_, TypeKind.Class) => "class",
+						(_, TypeKind.Struct) => "struct",
+						(_, TypeKind.Interface) => "interface",
+						_ => throw new InvalidOperationException()
+					},
+					typeName,
+					typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
+					typeParameters switch { [] => null, _ => $"<{string.Join(", ", typeParameters)}>" },
+					methodModifiers
+				),
+			_ => null
+		};
 
 	private static Data_GetHashCode? Transform_GetHashCode(GeneratorAttributeSyntaxContext gasc, CancellationToken _)
-	{
-		if (gasc is not
+		=> gasc switch
+		{
 			{
 				TargetNode: MethodDeclarationSyntax
 				{
 					Modifiers: var methodModifiers and not [],
-					Parent: TypeDeclarationSyntax
-					{
-						Modifiers: var typeModifiers and not []
-					}
+					Parent: TypeDeclarationSyntax { Modifiers: var typeModifiers and not [] }
 				},
 				TargetSymbol: IMethodSymbol
 				{
@@ -129,60 +125,111 @@ public sealed class AutoOverriddingGenerator : IIncrementalGenerator
 						ContainingNamespace: var namespaceSymbol
 					} typeSymbol
 				}
-			})
-		{
-			return null;
-		}
+			}
+			when methodModifiers.Any(SyntaxKind.PartialKeyword)
+				&& typeModifiers.Any(SyntaxKind.PartialKeyword)
+				=> new(
+					namespaceSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)["global::".Length..],
+					(isRecord, typeKind) switch
+					{
+						(true, TypeKind.Class) => "record",
+						(true, TypeKind.Struct) => "record struct",
+						(_, TypeKind.Class) => "class",
+						(_, TypeKind.Struct) => "struct",
+						(_, TypeKind.Interface) => "interface",
+						_ => throw new InvalidOperationException()
+					},
+					typeName,
+					typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
+					typeParameters switch { [] => null, _ => $"<{string.Join(", ", typeParameters)}>" },
+					methodModifiers,
+					(
+						from member in typeSymbol.GetMembers()
+						let memberName = member switch
+						{
+							IFieldSymbol { Name: var f, DeclaredAccessibility: Accessibility.Public, IsStatic: false }
+								=> f,
+							IPropertySymbol { Name: var p, DeclaredAccessibility: Accessibility.Public, GetMethod: not null, IsStatic: false }
+								=> p,
+							_
+								=> null
+						}
+						where memberName is not null
+						select memberName
+					).ToArray()
+				),
+			_ => null
+		};
 
-		if (!methodModifiers.Any(SyntaxKind.PartialKeyword)
-			|| !typeModifiers.Any(SyntaxKind.PartialKeyword))
+	private static Data_ToString? Transform_ToString(GeneratorAttributeSyntaxContext gasc, CancellationToken _)
+		=> gasc switch
 		{
-			return null;
-		}
-
-		return new(
-			namespaceSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)["global::".Length..],
-			(isRecord, typeKind) switch
 			{
-				(true, TypeKind.Class) => "record",
-				(true, TypeKind.Struct) => "record struct",
-				(_, TypeKind.Class) => "class",
-				(_, TypeKind.Struct) => "struct",
-				(_, TypeKind.Interface) => "interface",
-				_ => throw new InvalidOperationException()
-			},
-			typeName,
-			typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
-			typeParameters switch
-			{
-				[] => null,
-				_ => $"<{string.Join(", ", typeParameters)}>"
-			},
-			methodModifiers,
-			(
-				from member in typeSymbol.GetMembers()
-				let memberName = member switch
+				TargetNode: MethodDeclarationSyntax
 				{
-					IFieldSymbol
+					Modifiers: var methodModifiers and not [],
+					Parent: TypeDeclarationSyntax { Modifiers: var typeModifiers and not [] }
+				},
+				TargetSymbol: IMethodSymbol
+				{
+					Name: nameof(ToString),
+					ReturnType:
 					{
-						Name: var f,
-						DeclaredAccessibility: Accessibility.Public,
-						IsStatic: false
-					} => f,
-					IPropertySymbol
+						SpecialType: SpecialType.System_String,
+						NullableAnnotation: var questionMarkToken
+					},
+					Parameters: [],
+					ContainingType:
 					{
-						Name: var p,
-						DeclaredAccessibility: Accessibility.Public,
-						GetMethod: not null,
-						IsStatic: false
-					} => p,
-					_ => null
+						Name: var typeName,
+						TypeKind: var typeKind,
+						IsRecord: var isRecord,
+						TypeParameters: var typeParameters,
+						ContainingNamespace: var namespaceSymbol
+					} typeSymbol
 				}
-				where memberName is not null
-				select memberName
-			).ToArray()
-		);
-	}
+			}
+			when methodModifiers.Any(SyntaxKind.PartialKeyword)
+				&& typeModifiers.Any(SyntaxKind.PartialKeyword)
+				=> new(
+					namespaceSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)["global::".Length..],
+					(isRecord, typeKind) switch
+					{
+						(true, TypeKind.Class) => "record",
+						(true, TypeKind.Struct) => "record struct",
+						(_, TypeKind.Class) => "class",
+						(_, TypeKind.Struct) => "struct",
+						(_, TypeKind.Interface) => "interface",
+						_ => throw new InvalidOperationException()
+					},
+					typeName,
+					typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
+					typeParameters switch { [] => null, _ => $"<{string.Join(", ", typeParameters)}>" },
+					methodModifiers,
+					(
+						from member in typeSymbol.GetMembers()
+						let memberName = member switch
+						{
+							IFieldSymbol { Name: var f, DeclaredAccessibility: Accessibility.Public, IsStatic: false }
+								=> f,
+							IPropertySymbol { Name: var p, DeclaredAccessibility: Accessibility.Public, GetMethod: not null, IsStatic: false }
+								=> p,
+							_
+								=> null
+						}
+						where memberName is not null
+						select memberName
+					).ToArray(),
+					questionMarkToken switch
+					{
+						NullableAnnotation.None => null,
+						NullableAnnotation.NotAnnotated => null,
+						NullableAnnotation.Annotated => "?",
+						_ => throw new InvalidOperationException()
+					}
+				),
+			_ => null
+		};
 
 	private static void Output_Equals(SourceProductionContext spc, ImmutableArray<Data_Equals> data)
 	{
@@ -271,6 +318,46 @@ public sealed class AutoOverriddingGenerator : IIncrementalGenerator
 		);
 	}
 
+	private static void Output_ToString(SourceProductionContext spc, ImmutableArray<Data_ToString> data)
+	{
+		var list = new List<string>();
+		foreach (var (@namespace, kind, typeName, typeFullName, typeParams, methodModifiers, dataMembers, nullableAnnotation) in data)
+		{
+			string expressions = string.Join(
+				", ",
+				from dataMember in dataMembers
+				select $$$""""{{nameof({{{dataMember}}})}} = {{{{{dataMember}}}}}""""
+			);
+
+			list.Add(
+				$$$""""
+				namespace {{{@namespace}}}
+				{
+					partial {{{kind}}} {{{typeName}}}{{{typeParams}}}
+					{
+						/// <inheritdoc/>
+						[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute]
+						[global::System.CodeDom.Compiler.GeneratedCodeAttribute("{{{nameof(AutoOverriddingGenerator)}}}", "{{{SourceGeneratorVersion.Value}}}")]
+						{{{methodModifiers}}} string{{{nullableAnnotation}}} ToString()
+							=> $$"""{{nameof({{{typeName}}}{{{typeParams}}})}} { {{{expressions}}} }""";
+					}
+				}
+				""""
+			);
+		}
+
+		spc.AddSource(
+			$"AutoOverridding.ToString{SourceGeneratorFileNameShortcut.AutoOverriddingGenerator}",
+			$$"""
+			// <auto-generated />
+
+			#nullable enable
+
+			{{string.Join("\r\n\r\n", list)}}
+			"""
+		);
+	}
+
 
 	private sealed record Data_Equals(
 		string NamespaceName,
@@ -289,5 +376,16 @@ public sealed class AutoOverriddingGenerator : IIncrementalGenerator
 		string? TypeParametersString,
 		SyntaxTokenList MethodModifiers,
 		string[] DataMemberNames
+	);
+
+	private sealed record Data_ToString(
+		string NamespaceName,
+		string TypeKind,
+		string TypeName,
+		string TypeFullName,
+		string? TypeParametersString,
+		SyntaxTokenList MethodModifiers,
+		string[] DataMemberNames,
+		string? NullableAnnotation
 	);
 }
