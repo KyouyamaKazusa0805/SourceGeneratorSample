@@ -7,11 +7,13 @@
 
 	<ItemGroup>
 		<AdditionalFiles Include="MyTupleMaxTypeArgumentCount.txt" />
+		<AdditionalFiles Include="MyTuple2MaxTypeArgumentCount.txt" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\AutoDeconstructMethodGenerator\AutoDeconstructMethodGenerator.csproj" OutputItemType="Analyzer" ReferenceOutAssembly="false" />
 		<ProjectReference Include="..\AutoOverridding\AutoOverridding.csproj" OutputItemType="Analyzer" ReferenceOutAssembly="false" />
+		<ProjectReference Include="..\MyTuple\MyTuple.csproj" OutputItemType="Analyzer" ReferenceOutAssembly="false" />
 		<ProjectReference Include="..\SourceGeneratorSample.Greeting\SourceGeneratorSample.Greeting.csproj" OutputItemType="Analyzer" ReferenceOutAssembly="false" />
 		<ProjectReference Include="..\SourceGeneratorSample.IncrementalGenerator.Starters\SourceGeneratorSample.IncrementalGenerator.Starters.csproj" OutputItemType="Analyzer" ReferenceOutAssembly="false" />
 		<ProjectReference Include="..\SourceGeneratorSample.MyTuple\SourceGeneratorSample.MyTuple.csproj" OutputItemType="Analyzer" ReferenceOutAssembly="false" />

@@ -3,3 +3,4 @@
 [assembly: InternalsVisibleTo("SourceGeneratorSample.IncrementalGenerator.Starters")]
 [assembly: InternalsVisibleTo("AutoDeconstructMethodGenerator")]
 [assembly: InternalsVisibleTo("AutoOverridding")]
+[assembly: InternalsVisibleTo("MyTuple")]

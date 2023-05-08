@@ -1,16 +1,16 @@
-namespace SourceGeneratorSample.MyTuple;
+namespace MyTuple2;
 
 /// <summary>
-/// 一个源代码生成器，生成一个自定义使用的元组类型。
+/// 使用 <see cref="IIncrementalGenerator"/> 实现的源代码生成器，生成 <c>MyTuple2</c> 系列类型。
 /// </summary>
 [Generator(LanguageNames.CSharp)]
-public sealed class MyTupleGenerator : ISourceGenerator
+public sealed class MyTupleGenerator : IIncrementalGenerator
 {
 	/// <summary>
 	/// 一个用于本地文件配置信息错误，导致无法读取的错误提示信息数据的呈现对象。
 	/// </summary>
 	private static readonly DiagnosticDescriptor Descriptor = new(
-		"SG0000",
+		"IG0000",
 		"本地配置文件错误",
 		"源代码生成器生成成功，但本地配置文件有误。错误情况：{0}。",
 		"SourceGenerator",
@@ -20,34 +20,44 @@ public sealed class MyTupleGenerator : ISourceGenerator
 
 
 	/// <inheritdoc/>
-	public void Execute(GeneratorExecutionContext context)
+	public void Initialize(IncrementalGeneratorInitializationContext context)
+		=> context.RegisterSourceOutput(
+			context.CompilationProvider.Combine(context.AdditionalTextsProvider.Collect()),
+			Output
+		);
+
+	private void Output(
+		SourceProductionContext spc,
+		(Compilation, ImmutableArray<AdditionalText>) pair
+	)
 	{
+		var (compilation, additionalFiles) = pair;
+
 		// 读取本地配置文件（用 .txt 文件格式表示的），并取出其中的整数配置数值，然后给替换到这里的 maxCount 变量上。
 		// 注意，我们从外部导入进来的 .txt 格式的文件是放在目标项目里的，也就是源代码生成器生成的那些个代码文件所存储的那个项目，而不是这个项目！
 		// 一定要注意这个问题。否则会导致源代码生成器无法找到 AdditionalFiles 属性的结果，导致生成内容的错误，以及不满足预期的结果。
 		var maxCount = 8;
-		if (context.AdditionalFiles is var additionalFiles
-			&& additionalFiles.FirstOrDefault(static f => Regex.IsMatch(f.Path, "MyTuple(?!2)"))?.Path is { } path)
+		if (additionalFiles.FirstOrDefault(static f => f.Path.Contains("MyTuple2"))?.Path is { } path)
 		{
 			var result = File.ReadAllText(path);
 			var regex = new Regex("""\d+""");
 			var match = regex.Match(result);
 			if (!match.Success)
 			{
-				context.ReportDiagnostic(Diagnostic.Create(Descriptor, null, new[] { "配置文件的内容并不是一个数字" }));
+				spc.ReportDiagnostic(Diagnostic.Create(Descriptor, null, new[] { "配置文件的内容并不是一个数字" }));
 				goto GeneratePart;
 			}
 
 			var v = match.Value;
 			if (!int.TryParse(v, out var value))
 			{
-				context.ReportDiagnostic(Diagnostic.Create(Descriptor, null, new[] { "配置文件书写的数字过大" }));
+				spc.ReportDiagnostic(Diagnostic.Create(Descriptor, null, new[] { "配置文件书写的数字过大" }));
 				goto GeneratePart;
 			}
 
 			if (value is not (>= 2 and <= 8))
 			{
-				context.ReportDiagnostic(Diagnostic.Create(Descriptor, null, new[] { "由于源代码生成器的限制，输入的数值只能介于 2 到 8 之间（可含边界）" }));
+				spc.ReportDiagnostic(Diagnostic.Create(Descriptor, null, new[] { "由于源代码生成器的限制，输入的数值只能介于 2 到 8 之间（可含边界）" }));
 				goto GeneratePart;
 			}
 
@@ -102,9 +112,9 @@ public sealed class MyTupleGenerator : ISourceGenerator
 				{{docParamPart}}
 				[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute]
 				[global::System.CodeDom.Compiler.GeneratedCodeAttribute("{{nameof(MyTupleGenerator)}}", "{{SourceGeneratorVersion.Value}}")]
-				public readonly struct MyTuple{{genericArgs}}({{ctorArgs}}) :
-					global::System.IEquatable<MyTuple{{genericArgs}}>,
-					global::System.Numerics.IEqualityOperators<MyTuple{{genericArgs}}, MyTuple{{genericArgs}}, bool>
+				public readonly struct MyTuple2{{genericArgs}}({{ctorArgs}}) :
+					global::System.IEquatable<MyTuple2{{genericArgs}}>,
+					global::System.Numerics.IEqualityOperators<MyTuple2{{genericArgs}}, MyTuple2{{genericArgs}}, bool>
 					{{constraints}}
 				{
 					{{properties}}
@@ -113,12 +123,12 @@ public sealed class MyTupleGenerator : ISourceGenerator
 					[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute]
 					[global::System.CodeDom.Compiler.GeneratedCodeAttribute("{{nameof(MyTupleGenerator)}}", "{{SourceGeneratorVersion.Value}}")]
 					public override bool Equals([global::System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] object? obj)
-						=> obj is MyTuple{{genericArgs}} comparer && Equals(comparer);
+						=> obj is MyTuple2{{genericArgs}} comparer && Equals(comparer);
 
 					/// <inheritdoc/>
 					[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute]
 					[global::System.CodeDom.Compiler.GeneratedCodeAttribute("{{nameof(MyTupleGenerator)}}", "{{SourceGeneratorVersion.Value}}")]
-					public bool Equals(MyTuple{{genericArgs}} other) => this == other;
+					public bool Equals(MyTuple2{{genericArgs}} other) => this == other;
 
 					/// <inheritdoc/>
 					[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute]
@@ -129,13 +139,13 @@ public sealed class MyTupleGenerator : ISourceGenerator
 					/// <inheritdoc/>
 					[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute]
 					[global::System.CodeDom.Compiler.GeneratedCodeAttribute("{{nameof(MyTupleGenerator)}}", "{{SourceGeneratorVersion.Value}}")]
-					public static bool operator ==(MyTuple{{genericArgs}} left, MyTuple{{genericArgs}} right)
+					public static bool operator ==(MyTuple2{{genericArgs}} left, MyTuple2{{genericArgs}} right)
 						=> {{comparison}};
 
 					/// <inheritdoc/>
 					[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute]
 					[global::System.CodeDom.Compiler.GeneratedCodeAttribute("{{nameof(MyTupleGenerator)}}", "{{SourceGeneratorVersion.Value}}")]
-					public static bool operator !=(MyTuple{{genericArgs}} left, MyTuple{{genericArgs}} right)
+					public static bool operator !=(MyTuple2{{genericArgs}} left, MyTuple2{{genericArgs}} right)
 						=> !(left == right);
 				}
 				"""
@@ -143,8 +153,8 @@ public sealed class MyTupleGenerator : ISourceGenerator
 		}
 
 		// 输出文件。
-		context.AddSource(
-			$"MyTuple{SourceGeneratorFileNameShortcut.MyTupleGenerator}",
+		spc.AddSource(
+			$"MyTuple2{SourceGeneratorFileNameShortcut.MyTupleGenerator}",
 			$$"""
 			// <auto-generated/>
 
@@ -154,10 +164,5 @@ public sealed class MyTupleGenerator : ISourceGenerator
 			{{string.Join("\r\n\r\n", list)}}
 			"""
 		);
-	}
-
-	/// <inheritdoc/>
-	public void Initialize(GeneratorInitializationContext context)
-	{
 	}
 }

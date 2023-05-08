@@ -24,7 +24,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SourceGeneratorSample.Incre
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoDeconstructMethodGenerator", "src\AutoDeconstructMethodGenerator\AutoDeconstructMethodGenerator.csproj", "{D8DF382B-784B-4CF0-B7EA-3054B7CE4F94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoOverridding", "src\AutoOverridding\AutoOverridding.csproj", "{1524FE90-C85A-40B8-BBD2-CF96C04B79FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoOverridding", "src\AutoOverridding\AutoOverridding.csproj", "{1524FE90-C85A-40B8-BBD2-CF96C04B79FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTuple", "src\MyTuple\MyTuple.csproj", "{B38DD3CC-7AB6-4C60-99C0-037819BC28A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,6 +62,10 @@ Global
 		{1524FE90-C85A-40B8-BBD2-CF96C04B79FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1524FE90-C85A-40B8-BBD2-CF96C04B79FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1524FE90-C85A-40B8-BBD2-CF96C04B79FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B38DD3CC-7AB6-4C60-99C0-037819BC28A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B38DD3CC-7AB6-4C60-99C0-037819BC28A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B38DD3CC-7AB6-4C60-99C0-037819BC28A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B38DD3CC-7AB6-4C60-99C0-037819BC28A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
