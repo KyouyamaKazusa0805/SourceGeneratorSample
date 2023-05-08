@@ -7,9 +7,7 @@ namespace SourceGeneratorSample.Models;
 /// <param name="r"><inheritdoc cref="R" path="/summary"/></param>
 /// <param name="g"><inheritdoc cref="G" path="/summary"/></param>
 /// <param name="b"><inheritdoc cref="B" path="/summary"/></param>
-public readonly partial struct Color(byte a, byte r, byte g, byte b) :
-	IEquatable<Color>,
-	IEqualityOperators<Color, Color, bool>
+public readonly partial struct Color(byte a, byte r, byte g, byte b) : IEquatable<Color>, IEqualityOperators<Color, Color, bool>
 {
 	/// <summary>
 	/// 表示 alpha 分量（透明度）。
