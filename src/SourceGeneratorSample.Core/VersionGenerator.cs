@@ -1,9 +1,8 @@
 namespace SourceGeneratorSample.Core;
 
 /// <summary>
-/// 一个源代码生成器的项目，这个项目专门读取根目录下的 Directory.Build.props 文件，
-/// 根据配置的 Version 标签的数值，产生一个常量字段 Version，将结果自动写入到该字段里面，
-/// 这样的方式达到自动更新的目的。
+/// 一个源代码生成器的项目，这个项目专门读取根目录下的 Directory.Build.props 文件，根据配置的 Version 标签的数值产生一个常量字段 Version，
+/// 将结果自动写入到该字段里面，这样的方式达到自动更新的目的。
 /// </summary>
 [Generator(LanguageNames.CSharp)]
 public sealed class VersionGenerator : ISourceGenerator
