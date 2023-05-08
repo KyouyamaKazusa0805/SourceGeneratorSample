@@ -22,12 +22,9 @@ public sealed class MyTupleGenerator : ISourceGenerator
 	/// <inheritdoc/>
 	public void Execute(GeneratorExecutionContext context)
 	{
-		// 读取本地配置文件（用 .txt 文件格式表示的），
-		// 并取出其中的整数配置数值，然后给替换到这里的 maxCount 变量上。
-		// 注意，我们从外部导入进来的 .txt 格式的文件是放在目标项目里的，
-		// 也就是源代码生成器生成的那些个代码文件，所存储的那个项目。
-		// 而不是这个项目！一定要注意这个问题；否则会导致源代码生成器无法找到 AdditionalFiles
-		// 属性的结果，导致生成内容的错误，以及不满足预期的结果。
+		// 读取本地配置文件（用 .txt 文件格式表示的），并取出其中的整数配置数值，然后给替换到这里的 maxCount 变量上。
+		// 注意，我们从外部导入进来的 .txt 格式的文件是放在目标项目里的，也就是源代码生成器生成的那些个代码文件所存储的那个项目，而不是这个项目！
+		// 一定要注意这个问题。否则会导致源代码生成器无法找到 AdditionalFiles 属性的结果，导致生成内容的错误，以及不满足预期的结果。
 		var maxCount = 8;
 		if (context.AdditionalFiles is [{ Path: var path }])
 		{
@@ -57,8 +54,7 @@ public sealed class MyTupleGenerator : ISourceGenerator
 		}
 
 	GeneratePart:
-		// 我们的目标是生成一个泛型参数个数不同的同名重载类型，跟 Action、Action<>、Action<,> 等等相似的代码片段。
-		// 所以我们需要一个循环去生成它们。
+		// 我们的目标是生成一个泛型参数个数不同的同名重载类型，跟 Action、Action<>、Action<,> 等等相似的代码片段，所以我们需要一个循环去生成它们。
 		var list = new List<string>();
 		for (var i = 2; i <= maxCount; i++)
 		{
@@ -75,10 +71,7 @@ public sealed class MyTupleGenerator : ISourceGenerator
 					"""
 			);
 			var genericArgs = $"<{string.Join(", ", from index in indices select $"T{index}")}>";
-			var ctorArgs = string.Join(
-				", ",
-				from index in indices select $"T{index} value{index}"
-			);
+			var ctorArgs = string.Join(", ", from index in indices select $"T{index} value{index}");
 			var constraints = string.Join(
 				"\r\n\t",
 				from index in indices
@@ -95,14 +88,8 @@ public sealed class MyTupleGenerator : ISourceGenerator
 						public T{{index}} Value{{index}} { get; } = value{{index}};
 					"""
 			);
-			var comparison = string.Join(
-				" && ",
-				from index in indices select $"left.Value{index} == right.Value{index}"
-			);
-			var paramsInHashCode = string.Join(
-				", ",
-				from index in indices select $"Value{index}"
-			);
+			var comparison = string.Join(" && ", from index in indices select $"left.Value{index} == right.Value{index}");
+			var paramsInHashCode = string.Join(", ", from index in indices select $"Value{index}");
 
 			// 将前面的片段嵌入到源代码之中。
 			// 这里使用一个 list 挨个保存类型的代码，然后最后将它们放在同一个文件里。
